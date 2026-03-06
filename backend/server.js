@@ -1,85 +1,128 @@
-const express = require("express");
-const cors = require("cors");
-const fs = require("fs-extra");
-const path = require("path");
-const archiver = require("archiver");
+const express = require("express")
+const cors = require("cors")
+const fs = require("fs-extra")
+const path = require("path")
+const archiver = require("archiver")
 
-const app = express();
+const app = express()
 
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
-const PORT = 5000;
+const PORT = 5000
+
+
+/* Home Route */
 
 app.get("/", (req, res) => {
-  res.send("DevOps Project Generator API Running");
-});
+
+res.send("DevOps Project Generator API Running")
+
+})
+
+
+/* Generate Project */
 
 app.get("/generate", async (req, res) => {
 
-  const projectPath = path.join(__dirname, "generated-project");
+const language = req.query.language
+const cicd = req.query.cicd
 
-  try {
+const projectPath = path.join(__dirname,"generated-project")
 
-    await fs.remove(projectPath);
+await fs.remove(projectPath)
+await fs.ensureDir(projectPath)
 
-    await fs.ensureDir(projectPath + "/app");
 
-    await fs.writeFile(
-      projectPath + "/app/app.js",
-      `console.log("Hello DevOps Project");`
-    );
+// Language Template
 
-    await fs.writeFile(
-      projectPath + "/Dockerfile",
-      `FROM node:18
-WORKDIR /app
-COPY . .
-RUN npm install
-CMD ["node","app/app.js"]`
-    );
+if(language === "node"){
 
-    await fs.writeFile(
-      projectPath + "/Jenkinsfile",
-      `pipeline {
-  agent any
-  stages {
-    stage('Build'){
-      steps{
-        echo "Building Project"
-      }
-    }
+await fs.ensureDir(projectPath+"/app")
+
+await fs.writeFile(
+projectPath+"/app/app.js",
+`console.log("Node DevOps Project")`
+)
+
+}
+
+if(language === "python"){
+
+await fs.ensureDir(projectPath+"/app")
+
+await fs.writeFile(
+projectPath+"/app/app.py",
+`print("Python DevOps Project")`
+)
+
+}
+
+
+// CI/CD Template
+
+if(cicd === "github"){
+
+await fs.ensureDir(projectPath+"/.github/workflows")
+
+await fs.writeFile(
+projectPath+"/.github/workflows/ci.yml",
+`name: CI
+on: [push]
+
+jobs:
+ build:
+  runs-on: ubuntu-latest
+  steps:
+   - uses: actions/checkout@v3`
+)
+
+}
+
+if(cicd === "jenkins"){
+
+await fs.writeFile(
+projectPath+"/Jenkinsfile",
+`pipeline {
+ agent any
+ stages {
+  stage('Build'){
+   steps{
+    echo "Build running"
+   }
   }
+ }
 }`
-    );
+)
 
-    await fs.writeFile(
-      projectPath + "/README.md",
-      `# DevOps Generated Project`
-    );
+}
 
-    const zipPath = path.join(__dirname, "project.zip");
 
-    const output = fs.createWriteStream(zipPath);
-    const archive = archiver("zip", { zlib: { level: 9 } });
+// Create ZIP
 
-    output.on("close", () => {
-      res.download(zipPath);
-    });
+const zipPath = path.join(__dirname,"project.zip")
 
-    archive.pipe(output);
-    archive.directory(projectPath, false);
-    archive.finalize();
+const output = fs.createWriteStream(zipPath)
+const archive = archiver("zip",{zlib:{level:9}})
 
-  } catch (error) {
+output.on("close",()=>{
 
-    console.error(error);
-    res.status(500).send("Error generating project");
+res.download(zipPath)
 
-  }
+})
 
-});
+archive.pipe(output)
+
+archive.directory(projectPath,false)
+
+archive.finalize()
+
+})
+
+
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+console.log(`Server running on port ${PORT}`)
+
+})
