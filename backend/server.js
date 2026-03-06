@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs-extra");
 const path = require("path");
+const archiver = require("archiver");
 
 const app = express();
 
@@ -10,13 +11,12 @@ app.use(express.json());
 
 const PORT = 5000;
 
-/* Home route */
 app.get("/", (req, res) => {
   res.send("DevOps Project Generator API Running");
 });
 
-/* Generate DevOps Project */
 app.get("/generate", async (req, res) => {
+
   const projectPath = path.join(__dirname, "generated-project");
 
   try {
@@ -55,19 +55,29 @@ CMD ["node","app/app.js"]`
 
     await fs.writeFile(
       projectPath + "/README.md",
-      `# DevOps Generated Project
-This project was generated automatically.`
+      `# DevOps Generated Project`
     );
 
-    res.json({
-      message: "Project generated successfully",
-      location: projectPath
+    const zipPath = path.join(__dirname, "project.zip");
+
+    const output = fs.createWriteStream(zipPath);
+    const archive = archiver("zip", { zlib: { level: 9 } });
+
+    output.on("close", () => {
+      res.download(zipPath);
     });
 
+    archive.pipe(output);
+    archive.directory(projectPath, false);
+    archive.finalize();
+
   } catch (error) {
+
     console.error(error);
     res.status(500).send("Error generating project");
+
   }
+
 });
 
 app.listen(PORT, () => {
