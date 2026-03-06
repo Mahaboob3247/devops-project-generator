@@ -1,112 +1,70 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>DevOps Project Generator</title>
+    <title>DevOps Project Generator</title>
 
-<style>
+    <link rel="stylesheet" href="style.css">
 
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:linear-gradient(135deg,#0f172a,#1e293b);
-  color:white;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.card{
-
-  background:#111827;
-  padding:40px;
-  width:400px;
-  border-radius:12px;
-  box-shadow:0px 10px 30px rgba(0,0,0,0.5);
-  text-align:center;
-
-}
-
-h1{
-  margin-bottom:10px;
-}
-
-p{
-  color:#9ca3af;
-}
-
-select{
-
-  width:100%;
-  padding:12px;
-  margin-top:8px;
-  margin-bottom:20px;
-  border-radius:6px;
-  border:none;
-  background:#1f2937;
-  color:white;
-
-}
-
-button{
-
-  width:100%;
-  padding:15px;
-  background:#22c55e;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-
-}
-
-button:hover{
-  background:#16a34a;
-}
-
-</style>
+    <!-- DevOps Icons -->
+    <script src="https://kit.fontawesome.com/4b8f4c8b6c.js" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
 
+<div class="container">
+
+<h1>⚙️ DevOps Project Generator</h1>
+
+<p>Create a production-ready DevOps project instantly</p>
+
 <div class="card">
 
-<h1>DevOps Project Generator</h1>
-<p>Generate a complete DevOps starter project instantly</p>
-
 <label>Programming Language</label>
-
 <select id="language">
 <option value="node">Node.js</option>
 <option value="python">Python</option>
 </select>
 
-<label>CI/CD Pipeline</label>
 
+<label>CI/CD Tool</label>
 <select id="cicd">
 <option value="github">GitHub Actions</option>
 <option value="jenkins">Jenkins</option>
 </select>
 
-<button onclick="generateProject()">Generate DevOps Project</button>
+
+<div class="options">
+
+<div class="option">
+<i class="fab fa-docker"></i>
+<label>
+<input type="checkbox" id="docker">
+Docker
+</label>
+</div>
+
+<div class="option">
+<i class="fas fa-dharmachakra"></i>
+<label>
+<input type="checkbox" id="kubernetes">
+Kubernetes
+</label>
+</div>
 
 </div>
 
-<script>
 
-function generateProject(){
+<button onclick="generateProject()" id="generateBtn">
+🚀 Generate Project
+</button>
 
-const language=document.getElementById("language").value
-const cicd=document.getElementById("cicd").value
+</div>
 
-window.location.href=
-`http://localhost:5000/generate?language=${language}&cicd=${cicd}`
+</div>
 
-}
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
