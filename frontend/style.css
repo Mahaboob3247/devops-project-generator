@@ -1,62 +1,81 @@
 body{
-font-family: Arial;
-background: linear-gradient(120deg,#1e3c72,#2a5298);
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 color:white;
 }
 
 .container{
-width:500px;
-margin:auto;
-margin-top:80px;
 text-align:center;
+width:420px;
+}
+
+h1{
+margin-bottom:5px;
+}
+
+.subtitle{
+opacity:0.8;
+margin-bottom:25px;
 }
 
 .card{
-background:white;
-color:black;
+background:#1e293b;
 padding:30px;
-border-radius:10px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2);
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 
-select{
+.form-group{
+margin-bottom:18px;
+text-align:left;
+}
+
+label{
+font-size:14px;
+display:block;
+margin-bottom:5px;
+}
+
+input,select{
 width:100%;
 padding:10px;
-margin-bottom:20px;
-border-radius:5px;
+border-radius:6px;
+border:none;
+outline:none;
 }
 
-.options{
-display:flex;
-justify-content:space-around;
+.checkbox-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
 margin:20px 0;
 }
 
-.option{
-text-align:center;
+.toggle{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:14px;
 }
 
-.option i{
-font-size:40px;
-margin-bottom:5px;
-color:#2a5298;
-}
-
-button{
-background:#2a5298;
-color:white;
+.generate-btn{
+width:100%;
+padding:12px;
+background:#3b82f6;
 border:none;
-padding:12px 25px;
-border-radius:6px;
-cursor:pointer;
+border-radius:8px;
+color:white;
 font-size:16px;
+cursor:pointer;
+transition:0.3s;
 }
 
-button:hover{
-background:#1e3c72;
-}
-
-.loading{
-background:gray;
+.generate-btn:hover{
+background:#2563eb;
+transform:scale(1.03);
 }

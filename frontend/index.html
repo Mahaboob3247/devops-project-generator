@@ -1,63 +1,67 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>DevOps Project Generator</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <!-- DevOps Icons -->
-    <script src="https://kit.fontawesome.com/4b8f4c8b6c.js" crossorigin="anonymous"></script>
-
+<meta charset="UTF-8">
+<title>DevOps Project Generator</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <div class="container">
 
-<h1>⚙️ DevOps Project Generator</h1>
-
-<p>Create a production-ready DevOps project instantly</p>
+<h1>🚀 DevOps Project Generator</h1>
+<p class="subtitle">Generate production-ready DevOps repositories instantly</p>
 
 <div class="card">
 
-<label>Programming Language</label>
+<div class="form-group">
+<label>Project Name</label>
+<input type="text" id="projectName" placeholder="my-devops-app">
+</div>
+
+<div class="form-group">
+<label>Language</label>
 <select id="language">
 <option value="node">Node.js</option>
 <option value="python">Python</option>
+<option value="java">Java</option>
+<option value="go">Go</option>
 </select>
+</div>
 
-
-<label>CI/CD Tool</label>
+<div class="form-group">
+<label>CI/CD</label>
 <select id="cicd">
-<option value="github">GitHub Actions</option>
 <option value="jenkins">Jenkins</option>
+<option value="github">GitHub Actions</option>
 </select>
+</div>
 
+<div class="checkbox-grid">
 
-<div class="options">
-
-<div class="option">
-<i class="fab fa-docker"></i>
-<label>
+<label class="toggle">
 <input type="checkbox" id="docker">
+<span class="slider"></span>
 Docker
 </label>
-</div>
 
-<div class="option">
-<i class="fas fa-dharmachakra"></i>
-<label>
+<label class="toggle">
 <input type="checkbox" id="kubernetes">
+<span class="slider"></span>
 Kubernetes
 </label>
-</div>
+
+<label class="toggle">
+<input type="checkbox" id="terraform">
+<span class="slider"></span>
+Terraform
+</label>
 
 </div>
 
-
-<button onclick="generateProject()" id="generateBtn">
-🚀 Generate Project
+<button class="generate-btn" onclick="generateProject()">
+Generate DevOps Project
 </button>
 
 </div>
